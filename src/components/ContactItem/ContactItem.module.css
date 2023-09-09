@@ -1,0 +1,20 @@
+.contactItem {
+ margin: 5px;
+}
+
+.contactItemButton {
+  font-size: 0.7rem;
+  margin-left: 10px;
+  padding: 3px 6px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 7px;
+}
+
+.contactItemButton:hover,
+.contactItemButton:focus {
+  background-color: #d32f2f;
+}

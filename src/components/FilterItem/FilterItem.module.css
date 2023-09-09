@@ -1,0 +1,19 @@
+.filterForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin-bottom: 20px;
+
+}
+.filterNumberSearch{
+  font-size: 0.8rem;
+  opacity: 0.5;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+.filterFormInput {
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}

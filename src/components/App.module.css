@@ -1,0 +1,31 @@
+
+.adressBookContainer {
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #cac4c4;
+  background-color: #cac4c47c;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  text-align: center;
+}
+.contactContainer{
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #a09a9a;
+  background-color: #cac4c4a2;
+  border-radius: 5px;
+}
+
+.subHeader {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.serchHeader {
+  font-size: 14px;
+  margin-top: 10px;
+}
