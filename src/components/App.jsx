@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm/ContactForm';
@@ -6,30 +7,24 @@ import Filter from './FilterItem/FilterItem';
 import styles from './App.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import {
+  fetchContacts,
   addContact,
   deleteContact,
   setFilter,
   toggleSearchByPhone,
-  loadContacts,
-} from './redux/contactSlice.js';
-import { persistor } from './redux/store';
+} from './redux/contactSlice';
 
 const App = () => {
-  const contacts = useSelector((state) => state.contacts.contacts);
+  const contacts = useSelector((state) => state.contacts.items);
   const filter = useSelector((state) => state.contacts.filter);
   const searchByPhone = useSelector((state) => state.contacts.searchByPhone);
+  const isLoading = useSelector((state) => state.contacts.isLoading);
+  const error = useSelector((state) => state.contacts.error);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    persistor.persist();
-    const storedContacts = loadContactsFromLocalStorage();
-    dispatch(loadContacts(storedContacts));
+    dispatch(fetchContacts());
   }, [dispatch]);
-
-  const loadContactsFromLocalStorage = () => {
-    const storedContacts = localStorage.getItem('contacts');
-    return storedContacts ? JSON.parse(storedContacts) : [];
-  };
 
   const handleAddContact = (newContact) => {
     const existingName = contacts.find(
@@ -51,12 +46,10 @@ const App = () => {
     }
 
     dispatch(addContact({ ...newContact, id: nanoid() }));
-    saveContactsToLocalStorage([...contacts, { ...newContact, id: nanoid() }]);
   };
 
   const handleDeleteContact = (id) => {
     dispatch(deleteContact(id));
-    saveContactsToLocalStorage(contacts.filter((contact) => contact.id !== id));
   };
 
   const handleFilterChange = (event) => {
@@ -73,10 +66,6 @@ const App = () => {
       : contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  const saveContactsToLocalStorage = (contacts) => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  };
-
   return (
     <div className={styles.adressBookContainer}>
       <h1 className={styles.header}>Телефонна книга</h1>
@@ -90,7 +79,13 @@ const App = () => {
           onToggleSearchByPhone={handleToggleSearchByPhone}
           searchByPhone={searchByPhone}
         />
-        <ContactList contacts={filteredContacts} onDeleteContact={handleDeleteContact} />
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : (
+          <ContactList contacts={filteredContacts} onDeleteContact={handleDeleteContact} />
+        )}
       </div>
     </div>
   );
